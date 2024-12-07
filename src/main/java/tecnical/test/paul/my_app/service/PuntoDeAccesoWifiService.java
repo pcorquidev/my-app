@@ -24,8 +24,8 @@ public class PuntoDeAccesoWifiService {
                 .map(puntoDeAccesoWifi -> mapToDTO(puntoDeAccesoWifi, new PuntoDeAccesoWifiDTO()))
                 .toList();
     }
-
-    public PuntoDeAccesoWifiDTO get(final Long id) {
+    
+    public PuntoDeAccesoWifiDTO get(final String id) {
         return puntoDeAccesoWifiRepository.findById(id)
                 .map(puntoDeAccesoWifi -> mapToDTO(puntoDeAccesoWifi, new PuntoDeAccesoWifiDTO()))
                 .orElseThrow(NotFoundException::new);
