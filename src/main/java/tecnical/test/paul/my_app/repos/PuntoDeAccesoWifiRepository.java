@@ -4,5 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import tecnical.test.paul.my_app.domain.PuntoDeAccesoWifi;
 
 
-public interface PuntoDeAccesoWifiRepository extends JpaRepository<PuntoDeAccesoWifi, Long> {
+public interface PuntoDeAccesoWifiRepository extends JpaRepository<PuntoDeAccesoWifi, String> {
+
+    List<PuntoDeAccesoWifi> findAllBy(String colonia, Pageable pegeable);
 }
