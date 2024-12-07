@@ -31,20 +31,20 @@ public class PuntoDeAccesoWifiService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public Long create(final PuntoDeAccesoWifiDTO puntoDeAccesoWifiDTO) {
+    public String create(final PuntoDeAccesoWifiDTO puntoDeAccesoWifiDTO) {
         final PuntoDeAccesoWifi puntoDeAccesoWifi = new PuntoDeAccesoWifi();
         mapToEntity(puntoDeAccesoWifiDTO, puntoDeAccesoWifi);
         return puntoDeAccesoWifiRepository.save(puntoDeAccesoWifi).getId();
     }
 
-    public void update(final Long id, final PuntoDeAccesoWifiDTO puntoDeAccesoWifiDTO) {
+    public void update(final String id, final PuntoDeAccesoWifiDTO puntoDeAccesoWifiDTO) {
         final PuntoDeAccesoWifi puntoDeAccesoWifi = puntoDeAccesoWifiRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
         mapToEntity(puntoDeAccesoWifiDTO, puntoDeAccesoWifi);
         puntoDeAccesoWifiRepository.save(puntoDeAccesoWifi);
     }
 
-    public void delete(final Long id) {
+    public void delete(final String id) {
         puntoDeAccesoWifiRepository.deleteById(id);
     }
 

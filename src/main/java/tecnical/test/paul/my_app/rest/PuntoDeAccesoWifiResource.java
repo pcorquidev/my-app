@@ -34,26 +34,26 @@ public class PuntoDeAccesoWifiResource {
 
     @GetMapping("/{id}")
     public ResponseEntity<PuntoDeAccesoWifiDTO> getPuntoDeAccesoWifi(
-            @PathVariable(name = "id") final Long id) {
+            @PathVariable(name = "id") final String id) {
         return ResponseEntity.ok(puntoDeAccesoWifiService.get(id));
     }
 
     @PostMapping
-    public ResponseEntity<Long> createPuntoDeAccesoWifi(
+    public ResponseEntity<String> createPuntoDeAccesoWifi(
             @RequestBody @Valid final PuntoDeAccesoWifiDTO puntoDeAccesoWifiDTO) {
-        final Long createdId = puntoDeAccesoWifiService.create(puntoDeAccesoWifiDTO);
+        final String createdId = puntoDeAccesoWifiService.create(puntoDeAccesoWifiDTO);
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Long> updatePuntoDeAccesoWifi(@PathVariable(name = "id") final Long id,
+    public ResponseEntity<String> updatePuntoDeAccesoWifi(@PathVariable(name = "id") final String id,
             @RequestBody @Valid final PuntoDeAccesoWifiDTO puntoDeAccesoWifiDTO) {
         puntoDeAccesoWifiService.update(id, puntoDeAccesoWifiDTO);
         return ResponseEntity.ok(id);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePuntoDeAccesoWifi(@PathVariable(name = "id") final Long id) {
+    public ResponseEntity<Void> deletePuntoDeAccesoWifi(@PathVariable(name = "id") final String id) {
         puntoDeAccesoWifiService.delete(id);
         return ResponseEntity.noContent().build();
     }
