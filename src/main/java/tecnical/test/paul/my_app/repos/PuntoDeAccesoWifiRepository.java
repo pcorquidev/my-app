@@ -1,10 +1,15 @@
 package tecnical.test.paul.my_app.repos;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import tecnical.test.paul.my_app.domain.PuntoDeAccesoWifi;
 
+import java.util.Optional;
 
-public interface PuntoDeAccesoWifiRepository extends JpaRepository<PuntoDeAccesoWifi, String> {
 
-    List<PuntoDeAccesoWifi> findAllBy(String colonia, Pageable pegeable);
+public interface PuntoDeAccesoWifiRepository extends JpaRepository<PuntoDeAccesoWifi, Long> {
+
+    Page<PuntoDeAccesoWifi> findAllByColonia(String colonia, Pageable pegeable);
+    Optional<PuntoDeAccesoWifi> findById(String id);
 }

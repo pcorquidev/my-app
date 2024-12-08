@@ -33,6 +33,12 @@ public class PuntoDeAccesoWifiService {
                 .map(puntoDeAccesoWifi -> mapToDTO(puntoDeAccesoWifi, new PuntoDeAccesoWifiDTO()));
     }
 
+    public Page<PuntoDeAccesoWifiDTO> findAllByColonia(String colonia, Pageable pageable){
+        final Page<PuntoDeAccesoWifi> puntoDeAccesoWifis = puntoDeAccesoWifiRepository.findAllByColonia(colonia, pageable);
+        return puntoDeAccesoWifis
+                .map(puntoDeAccesoWifi -> mapToDTO(puntoDeAccesoWifi, new PuntoDeAccesoWifiDTO()));
+    }
+
     public PuntoDeAccesoWifiDTO get(final String id) {
         return puntoDeAccesoWifiRepository.findById(id)
                 .map(puntoDeAccesoWifi -> mapToDTO(puntoDeAccesoWifi, new PuntoDeAccesoWifiDTO()))
@@ -42,7 +48,7 @@ public class PuntoDeAccesoWifiService {
     public String create(final PuntoDeAccesoWifiDTO puntoDeAccesoWifiDTO) {
         final PuntoDeAccesoWifi puntoDeAccesoWifi = new PuntoDeAccesoWifi();
         mapToEntity(puntoDeAccesoWifiDTO, puntoDeAccesoWifi);
-        return puntoDeAccesoWifiRepository.save(puntoDeAccesoWifi).getId();
+        return puntoDeAccesoWifiRepository.save(puntoDeAccesoWifi).getId().toString();
     }
 
     public void update(final String id, final PuntoDeAccesoWifiDTO puntoDeAccesoWifiDTO) {
@@ -52,7 +58,7 @@ public class PuntoDeAccesoWifiService {
         puntoDeAccesoWifiRepository.save(puntoDeAccesoWifi);
     }
 
-    public void delete(final String id) {
+    public void delete(final Long id) {
         puntoDeAccesoWifiRepository.deleteById(id);
     }
 
@@ -70,7 +76,7 @@ public class PuntoDeAccesoWifiService {
 
     private PuntoDeAccesoWifi mapToEntity(final PuntoDeAccesoWifiDTO puntoDeAccesoWifiDTO,
             final PuntoDeAccesoWifi puntoDeAccesoWifi) {
-        puntoDeAccesoWifi.setId(puntoDeAccesoWifiDTO.getId());
+        //puntoDeAccesoWifi.setId(puntoDeAccesoWifiDTO.getId());
         puntoDeAccesoWifi.setPrograma(puntoDeAccesoWifiDTO.getPrograma());
         puntoDeAccesoWifi.setFechaInstalacion(puntoDeAccesoWifiDTO.getFechaInstalacion());
         puntoDeAccesoWifi.setLatitud(puntoDeAccesoWifiDTO.getLatitud());

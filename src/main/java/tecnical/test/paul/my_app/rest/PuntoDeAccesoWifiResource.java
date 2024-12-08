@@ -45,6 +45,16 @@ public class PuntoDeAccesoWifiResource {
         return ResponseEntity.ok(puntosDeAccesoWifiService);
     }
 
+    @GetMapping("/colonia/{name}")
+    public ResponseEntity<Page<PuntoDeAccesoWifiDTO>> getPuntosDeAccesoWifiByColonia(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @PathVariable(name = "name") final String name
+    ){
+        Pageable pageable = PageRequest.of(page,10);
+        Page<PuntoDeAccesoWifiDTO> puntoDeAccesoWifiDTOS = puntoDeAccesoWifiService.findAllByColonia(name,pageable);
+        return ResponseEntity.ok(puntoDeAccesoWifiDTOS);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<PuntoDeAccesoWifiDTO> getPuntoDeAccesoWifi(
             @PathVariable(name = "id") final String id) {
@@ -66,7 +76,7 @@ public class PuntoDeAccesoWifiResource {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePuntoDeAccesoWifi(@PathVariable(name = "id") final String id) {
+    public ResponseEntity<Void> deletePuntoDeAccesoWifi(@PathVariable(name = "id") final Long id) {
         puntoDeAccesoWifiService.delete(id);
         return ResponseEntity.noContent().build();
     }
