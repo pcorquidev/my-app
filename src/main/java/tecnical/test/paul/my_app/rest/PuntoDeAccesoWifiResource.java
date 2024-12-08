@@ -55,6 +55,17 @@ public class PuntoDeAccesoWifiResource {
         return ResponseEntity.ok(puntoDeAccesoWifiDTOS);
     }
 
+    @GetMapping("/coordenadas")
+    public ResponseEntity<Page<PuntoDeAccesoWifiDTO>> getPuntosDeAccesoWifiByProximity(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "longitud", defaultValue = "0.0") double longitud,
+            @RequestParam(name = "latitud", defaultValue = "0.0") double latitud
+    ){
+        Pageable pageable = PageRequest.of(page,10);
+        Page<PuntoDeAccesoWifiDTO> puntoDeAccesoWifiDTOS = puntoDeAccesoWifiService.findAllByProximity(latitud, longitud, pageable);
+        return ResponseEntity.ok(puntoDeAccesoWifiDTOS);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<PuntoDeAccesoWifiDTO> getPuntoDeAccesoWifi(
             @PathVariable(name = "id") final String id) {

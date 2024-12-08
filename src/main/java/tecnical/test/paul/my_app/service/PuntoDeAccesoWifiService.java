@@ -39,6 +39,25 @@ public class PuntoDeAccesoWifiService {
                 .map(puntoDeAccesoWifi -> mapToDTO(puntoDeAccesoWifi, new PuntoDeAccesoWifiDTO()));
     }
 
+    public Page<PuntoDeAccesoWifiDTO> findAllByProximity(Double latitude, Double longitude, Pageable pageable){
+        Double earthRadius = 6371.0;
+        double distanceInKm = 10;
+        double latDelta = distanceInKm / earthRadius;
+        double lonDelta = distanceInKm / (earthRadius * Math.cos(Math.toRadians(latitude)));
+
+        // Rango de latitud y longitud
+        double minLatitude = latitude - Math.toDegrees(latDelta);
+        double maxLatitude = latitude + Math.toDegrees(latDelta);
+        double minLongitude = longitude - Math.toDegrees(lonDelta);
+        double maxLongitude = longitude + Math.toDegrees(lonDelta);
+
+        final Page<PuntoDeAccesoWifi> puntoDeAccesoWifis = puntoDeAccesoWifiRepository.findAllByLatitudBetweenAndLongitudBetween(minLatitude, maxLatitude, minLongitude, maxLongitude,pageable);
+        return puntoDeAccesoWifis
+                .map(puntoDeAccesoWifi -> mapToDTO(puntoDeAccesoWifi, new PuntoDeAccesoWifiDTO()));
+    }
+
+
+
     public PuntoDeAccesoWifiDTO get(final String id) {
         return puntoDeAccesoWifiRepository.findById(id)
                 .map(puntoDeAccesoWifi -> mapToDTO(puntoDeAccesoWifi, new PuntoDeAccesoWifiDTO()))
@@ -48,7 +67,7 @@ public class PuntoDeAccesoWifiService {
     public String create(final PuntoDeAccesoWifiDTO puntoDeAccesoWifiDTO) {
         final PuntoDeAccesoWifi puntoDeAccesoWifi = new PuntoDeAccesoWifi();
         mapToEntity(puntoDeAccesoWifiDTO, puntoDeAccesoWifi);
-        return puntoDeAccesoWifiRepository.save(puntoDeAccesoWifi).getId().toString();
+        return puntoDeAccesoWifiRepository.save(puntoDeAccesoWifi).getId();
     }
 
     public void update(final String id, final PuntoDeAccesoWifiDTO puntoDeAccesoWifiDTO) {
@@ -76,7 +95,7 @@ public class PuntoDeAccesoWifiService {
 
     private PuntoDeAccesoWifi mapToEntity(final PuntoDeAccesoWifiDTO puntoDeAccesoWifiDTO,
             final PuntoDeAccesoWifi puntoDeAccesoWifi) {
-        //puntoDeAccesoWifi.setId(puntoDeAccesoWifiDTO.getId());
+        puntoDeAccesoWifi.setId(puntoDeAccesoWifiDTO.getId());
         puntoDeAccesoWifi.setPrograma(puntoDeAccesoWifiDTO.getPrograma());
         puntoDeAccesoWifi.setFechaInstalacion(puntoDeAccesoWifiDTO.getFechaInstalacion());
         puntoDeAccesoWifi.setLatitud(puntoDeAccesoWifiDTO.getLatitud());

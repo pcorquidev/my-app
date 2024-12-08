@@ -12,4 +12,7 @@ public interface PuntoDeAccesoWifiRepository extends JpaRepository<PuntoDeAcceso
 
     Page<PuntoDeAccesoWifi> findAllByColonia(String colonia, Pageable pegeable);
     Optional<PuntoDeAccesoWifi> findById(String id);
+    Page<PuntoDeAccesoWifi> findAllByLatitudBetweenAndLongitudBetween(Double minLatitude, Double maxLatitude,
+                                                               Double minLongitude,Double maxLongitud,
+                                                               Pageable pageable);
 }
