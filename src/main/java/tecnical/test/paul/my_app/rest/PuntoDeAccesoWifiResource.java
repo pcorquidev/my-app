@@ -2,6 +2,8 @@ package tecnical.test.paul.my_app.rest;
 
 import jakarta.validation.Valid;
 import java.util.List;
+
+import org.apache.tomcat.util.bcel.Const;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,12 +19,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
+import tecnical.test.paul.my_app.constants.Constants;
 import tecnical.test.paul.my_app.model.PuntoDeAccesoWifiDTO;
 import tecnical.test.paul.my_app.service.PuntoDeAccesoWifiService;
 
 
 @RestController
-@RequestMapping(value = "/api/puntoDeAccesoWifis", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = Constants.WIFI_RESOURCE, produces = MediaType.APPLICATION_JSON_VALUE)
 public class PuntoDeAccesoWifiResource {
 
     private final PuntoDeAccesoWifiService puntoDeAccesoWifiService;
@@ -36,39 +39,39 @@ public class PuntoDeAccesoWifiResource {
         return ResponseEntity.ok(puntoDeAccesoWifiService.findAll());
     }
 
-    @GetMapping("/list")
+    @GetMapping(Constants.GET_LIST)
     public ResponseEntity<Page<PuntoDeAccesoWifiDTO>> getPuntosDeAccessoWifiByPage(
-            @RequestParam(name = "page", defaultValue = "0") int page
+            @RequestParam(name = Constants.REQUEST_PARAM_PAGE, defaultValue = "0") int page
     ){
-        Pageable pageRequest = PageRequest.of(page,10);
+        Pageable pageRequest = PageRequest.of(page,Constants.PAGE_SIZE);
         Page<PuntoDeAccesoWifiDTO> puntosDeAccesoWifiService = puntoDeAccesoWifiService.findAll(pageRequest);
         return ResponseEntity.ok(puntosDeAccesoWifiService);
     }
 
-    @GetMapping("/colonia/{name}")
+    @GetMapping(Constants.GET_LIST_BY_COLONIA)
     public ResponseEntity<Page<PuntoDeAccesoWifiDTO>> getPuntosDeAccesoWifiByColonia(
-            @RequestParam(name = "page", defaultValue = "0") int page,
-            @PathVariable(name = "name") final String name
+            @RequestParam(name = Constants.REQUEST_PARAM_PAGE, defaultValue = "0") int page,
+            @PathVariable(name = Constants.REQUEST_PARAM_NAME) final String name
     ){
-        Pageable pageable = PageRequest.of(page,10);
+        Pageable pageable = PageRequest.of(page,Constants.PAGE_SIZE);
         Page<PuntoDeAccesoWifiDTO> puntoDeAccesoWifiDTOS = puntoDeAccesoWifiService.findAllByColonia(name,pageable);
         return ResponseEntity.ok(puntoDeAccesoWifiDTOS);
     }
 
-    @GetMapping("/coordenadas")
+    @GetMapping(Constants.GET_LiST_BY_COORDENADAS)
     public ResponseEntity<Page<PuntoDeAccesoWifiDTO>> getPuntosDeAccesoWifiByProximity(
-            @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "longitud", defaultValue = "0.0") double longitud,
-            @RequestParam(name = "latitud", defaultValue = "0.0") double latitud
+            @RequestParam(name = Constants.REQUEST_PARAM_PAGE, defaultValue = "0") int page,
+            @RequestParam(name = Constants.REQUEST_PARAM_LONGITUD, defaultValue = "0.0") double longitud,
+            @RequestParam(name = Constants.REQUEST_PARAM_LATITUD, defaultValue = "0.0") double latitud
     ){
-        Pageable pageable = PageRequest.of(page,10);
+        Pageable pageable = PageRequest.of(page,Constants.PAGE_SIZE);
         Page<PuntoDeAccesoWifiDTO> puntoDeAccesoWifiDTOS = puntoDeAccesoWifiService.findAllByProximity(latitud, longitud, pageable);
         return ResponseEntity.ok(puntoDeAccesoWifiDTOS);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(Constants.ID)
     public ResponseEntity<PuntoDeAccesoWifiDTO> getPuntoDeAccesoWifi(
-            @PathVariable(name = "id") final String id) {
+            @PathVariable(name = Constants.PATH_VARIABLE_ID) final String id) {
         return ResponseEntity.ok(puntoDeAccesoWifiService.get(id));
     }
 
@@ -79,14 +82,14 @@ public class PuntoDeAccesoWifiResource {
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(Constants.ID)
     public ResponseEntity<String> updatePuntoDeAccesoWifi(@PathVariable(name = "id") final String id,
             @RequestBody @Valid final PuntoDeAccesoWifiDTO puntoDeAccesoWifiDTO) {
         puntoDeAccesoWifiService.update(id, puntoDeAccesoWifiDTO);
         return ResponseEntity.ok(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(Constants.ID)
     public ResponseEntity<Void> deletePuntoDeAccesoWifi(@PathVariable(name = "id") final Long id) {
         puntoDeAccesoWifiService.delete(id);
         return ResponseEntity.noContent().build();
