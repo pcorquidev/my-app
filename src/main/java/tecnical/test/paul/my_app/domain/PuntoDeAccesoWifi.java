@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import java.time.OffsetDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +23,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class PuntoDeAccesoWifi {
 
     @Id
+    @GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )
+    private Long idwifi;
+
     @Column
     private String id;
 
