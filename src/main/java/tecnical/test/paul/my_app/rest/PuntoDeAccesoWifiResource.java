@@ -58,7 +58,7 @@ public class PuntoDeAccesoWifiResource {
         return ResponseEntity.ok(puntoDeAccesoWifiDTOS);
     }
 
-    @GetMapping(Constants.GET_LiST_BY_COORDENADAS)
+    @GetMapping(Constants.GET_LIST_BY_COORDENADAS)
     public ResponseEntity<Page<PuntoDeAccesoWifiDTO>> getPuntosDeAccesoWifiByProximity(
             @RequestParam(name = Constants.REQUEST_PARAM_PAGE, defaultValue = "0") int page,
             @RequestParam(name = Constants.REQUEST_PARAM_LONGITUD, defaultValue = "0.0") double longitud,
