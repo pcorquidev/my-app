@@ -1,6 +1,8 @@
 package tecnical.test.paul.my_app.service;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import tecnical.test.paul.my_app.domain.PuntoDeAccesoWifi;
@@ -24,7 +26,13 @@ public class PuntoDeAccesoWifiService {
                 .map(puntoDeAccesoWifi -> mapToDTO(puntoDeAccesoWifi, new PuntoDeAccesoWifiDTO()))
                 .toList();
     }
-    
+
+    public Page<PuntoDeAccesoWifiDTO> findAll(Pageable pageable){
+        final Page<PuntoDeAccesoWifi> puntoDeAccesoWifis = puntoDeAccesoWifiRepository.findAll(pageable);
+        return puntoDeAccesoWifis
+                .map(puntoDeAccesoWifi -> mapToDTO(puntoDeAccesoWifi, new PuntoDeAccesoWifiDTO()));
+    }
+
     public PuntoDeAccesoWifiDTO get(final String id) {
         return puntoDeAccesoWifiRepository.findById(id)
                 .map(puntoDeAccesoWifi -> mapToDTO(puntoDeAccesoWifi, new PuntoDeAccesoWifiDTO()))
@@ -62,6 +70,7 @@ public class PuntoDeAccesoWifiService {
 
     private PuntoDeAccesoWifi mapToEntity(final PuntoDeAccesoWifiDTO puntoDeAccesoWifiDTO,
             final PuntoDeAccesoWifi puntoDeAccesoWifi) {
+        puntoDeAccesoWifi.setId(puntoDeAccesoWifiDTO.getId());
         puntoDeAccesoWifi.setPrograma(puntoDeAccesoWifiDTO.getPrograma());
         puntoDeAccesoWifi.setFechaInstalacion(puntoDeAccesoWifiDTO.getFechaInstalacion());
         puntoDeAccesoWifi.setLatitud(puntoDeAccesoWifiDTO.getLatitud());
