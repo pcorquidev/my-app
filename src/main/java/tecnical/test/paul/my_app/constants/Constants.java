@@ -1,7 +1,5 @@
 package tecnical.test.paul.my_app.constants;
 
-import lombok.NoArgsConstructor;
-
 public class Constants {
 
     private Constants() {
@@ -9,7 +7,7 @@ public class Constants {
     }
 
     public static final String API_VERSION = "api/v1";
-    public static final String WIFI_RESOURCE = API_VERSION + "puntosWifi";
+    public static final String WIFI_RESOURCE = API_VERSION + "/puntosWifi";
     public static final String GET_LIST = "/list";
     public static final String GET_LIST_BY_COLONIA = "/colonia/{name}";
     public static final String GET_LIST_BY_COORDENADAS = "/cordenadas";
