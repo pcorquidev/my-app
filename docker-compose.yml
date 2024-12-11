@@ -1,1 +1,7 @@
-services: {}
+services:
+  my-app:
+    container_name: test-tecnico
+    build: ./
+    ports:
+      - 8080:8080
+
